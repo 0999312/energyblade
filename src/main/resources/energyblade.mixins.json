@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "mod.arcomit.energyblade.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "energyblade.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
