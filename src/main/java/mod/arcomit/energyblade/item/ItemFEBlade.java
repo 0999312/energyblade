@@ -20,9 +20,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -41,6 +41,37 @@ public class ItemFEBlade extends ItemSlashBlade {
                 .filter(FEBladeStorage::isEnergyDurability) // 当启用能量代替耐久时
                 .map(energy -> false)                       // 禁用原版耐久机制
                 .orElseGet(() -> super.isDamageable(stack)); // 否则继承默认逻辑
+    }
+
+    @Nullable
+    @Override
+    public CompoundTag getShareTag(ItemStack stack) {
+        var tag = stack.getOrCreateTag();
+        stack.getCapability(BLADESTATE).ifPresent(state -> {
+            if (!state.isEmpty())
+                tag.put("bladeState", state.serializeNBT());
+        });
+        stack.getCapability(ForgeCapabilities.ENERGY)
+                .filter(FEBladeStorage.class::isInstance)
+                .map(FEBladeStorage.class::cast)
+                .ifPresent(energy -> {
+                    tag.put("Energy", energy.serializeNBT());
+                });
+        return tag;
+    }
+
+    @Override
+    public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
+        if (nbt != null) {
+            if (nbt.contains("bladeState"))
+                stack.getCapability(BLADESTATE).ifPresent(state -> state.deserializeNBT(nbt.getCompound("bladeState")));
+            if (nbt.contains("Energy"))
+                stack.getCapability(ForgeCapabilities.ENERGY)
+                        .filter(FEBladeStorage.class::isInstance)
+                        .map(FEBladeStorage.class::cast)
+                        .ifPresent(energy -> energy.deserializeNBT(nbt.getCompound("Energy")));
+        }
+        super.readShareTag(stack, nbt);
     }
 
 

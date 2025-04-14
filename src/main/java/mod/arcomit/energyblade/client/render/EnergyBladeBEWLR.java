@@ -23,7 +23,7 @@ public class EnergyBladeBEWLR extends SlashBladeTEISR {
         super(p_172550_, p_172551_);
     }
 
-    // 将物品栏图标
+    // 修改物品栏图标（若设置了能量替代耐久，物品栏图标的耐久显示则更改电量显示）
     @Override
     public void renderIcon(ItemStack stack, PoseStack matrixStack, MultiBufferSource bufferIn, int lightIn, float scale, boolean renderDurability) {
         stack.getCapability(ForgeCapabilities.ENERGY)
