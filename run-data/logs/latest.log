@@ -1,0 +1,79 @@
+[047月2025 13:38:35.919] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\mr099\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, -mixin.config=energyblade.mixins.json, --mod, energyblade, --all, --output, D:\minecraft_1201_modding\energyblade\src\generated\resources, --existing, D:\minecraft_1201_modding\energyblade\src\main\resources, --mixin.config, energyblade.mixins.json]
+[047月2025 13:38:35.925] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.11 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[047月2025 13:38:36.039] [main/WARN] [net.minecraftforge.fml.loading.FMLConfig/CORE]: Configuration file D:\minecraft_1201_modding\energyblade\run-data\config\fml.toml is not correct. Correcting
+[047月2025 13:38:36.040] [main/INFO] [net.minecraftforge.fml.loading.FMLConfig/CORE]: Incorrect key [earlyWindowSkipGLVersions] was corrected from null to []
+[047月2025 13:38:36.040] [main/INFO] [net.minecraftforge.fml.loading.FMLConfig/CORE]: Incorrect key [earlyWindowLogHelpMessage] was corrected from null to true
+[047月2025 13:38:36.040] [main/INFO] [net.minecraftforge.fml.loading.FMLConfig/CORE]: Incorrect key [earlyWindowSquir] was corrected from null to false
+[047月2025 13:38:36.041] [main/INFO] [net.minecraftforge.fml.loading.FMLConfig/CORE]: Incorrect key [earlyWindowShowCPU] was corrected from null to false
+[047月2025 13:38:36.052] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[047月2025 13:38:36.087] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/mr099/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[047月2025 13:38:36.311] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\mr099\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.0\f0c0b352173d0a378cbdcec9cfc4ba65899a721\javafmllanguage-1.20.1-47.4.0.jar is missing mods.toml file
+[047月2025 13:38:36.314] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\mr099\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.0\e862740d8c84d08dbfedea412bef88fe42e727c5\lowcodelanguage-1.20.1-47.4.0.jar is missing mods.toml file
+[047月2025 13:38:36.318] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\mr099\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.0\5719b3a297a33f877ed5dde4cb4bd75c859096af\mclanguage-1.20.1-47.4.0.jar is missing mods.toml file
+[047月2025 13:38:36.321] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\mr099\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.0\235975dafa4309945b59c56b53f31dc5b65a6051\fmlcore-1.20.1-47.4.0.jar is missing mods.toml file
+[047月2025 13:38:36.515] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[047月2025 13:38:37.796] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[047月2025 13:38:37.805] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\mr099\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, energyblade, --all, --output, D:\minecraft_1201_modding\energyblade\src\generated\resources, --existing, D:\minecraft_1201_modding\energyblade\src\main\resources]
+[047月2025 13:38:37.906] [main/WARN] [mixin/]: Reference map 'energyblade.refmap.json' for energyblade.mixins.json could not be read. If this is a development environment you can ignore this message
+[047月2025 13:38:38.055] [main/INFO] [mixin/]: Remapping refMap slashblade.refmap.json using D:\minecraft_1201_modding\energyblade\build\createSrgToMcp\output.srg
+[047月2025 13:38:38.064] [main/INFO] [mixin/]: Remapping refMap mixins.cofhcore.refmap.json using D:\minecraft_1201_modding\energyblade\build\createSrgToMcp\output.srg
+[047月2025 13:38:38.066] [main/INFO] [mixin/]: Remapping refMap mixins.codechickenlib.refmap.json using D:\minecraft_1201_modding\energyblade\build\createSrgToMcp\output.srg
+[047月2025 13:38:38.483] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [energyblade]
+[047月2025 13:38:41.787] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.0, for MC 1.20.1 with MCP 20230612.114412
+[047月2025 13:38:41.811] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.0 Initialized
+[047月2025 13:38:41.818] [modloading-worker-0/INFO] [In-game NBTEdit Reborn/]: Loading NBTEdit ver: 5.2.8
+[047月2025 13:38:41.820] [modloading-worker-0/INFO] [In-game NBTEdit Reborn/]: NBTEdit loaded!
+[047月2025 13:38:42.419] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Configuration file D:\minecraft_1201_modding\energyblade\run-data\config\cofh_core-common.toml is not correct. Correcting
+[047月2025 13:38:42.420] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Gameplay was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.420] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Gameplay.Return Dismantle Drops was corrected from null to its default, false. 
+[047月2025 13:38:42.420] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Gameplay.Fishing was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.420] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Gameplay.Fishing.Fishing Exhaustion was corrected from null to its default, false. 
+[047月2025 13:38:42.420] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Gameplay.Fishing.Fishing Exhaustion Amount was corrected from null to its default, 0.125. 
+[047月2025 13:38:42.420] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Gameplay.World was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.420] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Gameplay.World.Sapling Growth Reduction was corrected from null to its default, false. 
+[047月2025 13:38:42.420] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Gameplay.World.Sapling Growth Reduction Factor was corrected from null to its default, 4. 
+[047月2025 13:38:42.425] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Configuration file D:\minecraft_1201_modding\energyblade\run-data\config\thermal-common.toml is not correct. Correcting
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Oil Sand was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Oil Sand.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Silver was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Silver.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Lead was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Lead.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Nickel was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Nickel.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Rubberwood Trees was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Rubberwood Trees.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Cinnabar was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Cinnabar.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Sulfur was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Sulfur.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Tin was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Tin.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Niter was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.426] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key World.Features.Niter.Enable was corrected from null to its default, true. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Configuration file D:\minecraft_1201_modding\energyblade\run-data\config\thermal_integration-common.toml is not correct. Correcting
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Materials was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Materials.Rose Gold was corrected from null to its default, true. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Materials.Steel was corrected from null to its default, true. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility was corrected from null to its default, SimpleCommentedConfig:{}. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Biomes O' Plenty was corrected from null to its default, true. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Create was corrected from null to its default, true. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Dyenamics was corrected from null to its default, true. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Farmer's Delight was corrected from null to its default, true. 
+[047月2025 13:38:42.427] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Immersive Engineering was corrected from null to its default, true. 
+[047月2025 13:38:42.428] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Mekanism was corrected from null to its default, true. 
+[047月2025 13:38:42.428] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Mystical Agriculture was corrected from null to its default, true. 
+[047月2025 13:38:42.428] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Quark was corrected from null to its default, true. 
+[047月2025 13:38:42.428] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Redstone Arsenal was corrected from null to its default, true. 
+[047月2025 13:38:42.428] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Refined Storage was corrected from null to its default, true. 
+[047月2025 13:38:42.428] [main/WARN] [net.minecraftforge.common.ForgeConfigSpec/CORE]: Incorrect key Mod Compatibility.Tinker's Construct was corrected from null to its default, true. 
+[047月2025 13:38:42.951] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/mr099/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.0_mapped_official_1.20.1/forge-1.20.1-47.4.0_mapped_official_1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[047月2025 13:38:42.951] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/mr099/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.0_mapped_official_1.20.1/forge-1.20.1-47.4.0_mapped_official_1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[047月2025 13:38:43.207] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[047月2025 13:38:43.265] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 57 ms
+[047月2025 13:38:43.265] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: SlashBlade Definition Registry
+[047月2025 13:38:43.270] [main/INFO] [net.minecraft.data.DataGenerator/]: SlashBlade Definition Registry finished after 4 ms
+[047月2025 13:38:43.270] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 63 ms
+[047月2025 13:38:43.272] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 3, old count: 0, new count: 4, removed stale: 0, written: 3

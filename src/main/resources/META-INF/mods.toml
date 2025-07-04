@@ -8,7 +8,7 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 authors = "${mod_authors}"
 description ='''
-拔刀剑能量刀
+HF(FE Energy) SlashBlade for SlashBlade:Resharped
 '''
 
 [[dependencies."${mod_id}"]]

@@ -1,0 +1,16 @@
+{
+  "item": "energyblade:forge_energy_blade",
+  "name": "energyblade:hf_blade",
+  "properties": {
+    "attack_base": 7.0,
+    "max_damage": 50,
+    "slash_art": "slashblade:circle_slash",
+    "sword_type": [
+      "bewitched"
+    ]
+  },
+  "render": {
+    "model": "energyblade:model/hf_blade.obj",
+    "texture": "energyblade:model/hf_blade.png"
+  }
+}

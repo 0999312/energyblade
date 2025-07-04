@@ -1,4 +1,6 @@
 {
   "tip.energyblade.energy_info" : "按住 %s键 以显示更多信息",
-  "tip.energyblade.forge_energy_info" : "当前能量: %s FE"
+  "tip.energyblade.forge_energy_info" : "当前能量: %s FE"  ,
+  "item.energyblade.forge_energy_blade" : "试作型高周波刀"  ,
+  "item.energyblade.hf_blade" : "高周波刀"
 }
