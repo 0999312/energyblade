@@ -87,6 +87,14 @@ repositories {
     maven {
         url "https://cursemaven.com"
     }
+    maven { url = "https://raw.github.com/0999312/MMMaven/main/repository" }
+    
+        
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
 }
 
 dependencies {
@@ -94,8 +102,14 @@ dependencies {
 
     //拔刀剑：重锋
     //implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6395356")
-    implementation fg.deobf("mods.flammpfeil.slashblade:slashbladeresharped-1.20.1:1.1.28")
-
+    implementation fg.deobf("mods.flammpfeil.slashblade:SlashBlade_Resharped:1.3.37")
+    
+    // compile against the JEI API but do not include it at runtime
+    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
+    // at runtime, use the full JEI jar for Forge
+    runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
+    
     //nbtedit
     implementation fg.deobf("curse.maven:nbtedit-reborn-678133:5984630")
 

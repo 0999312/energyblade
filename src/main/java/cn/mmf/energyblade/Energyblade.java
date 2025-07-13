@@ -24,7 +24,6 @@ public class Energyblade {
 	public static final RegistryObject<Item> FORGE_ENERGY_BLADE = ITEMS.register("forge_energy_blade",
 			() -> new ItemFEBlade(new ItemTierSlashBlade(40, 4F), 4, -2.4F, (new Item.Properties())));
 
-	@SuppressWarnings("removal")
 	public Energyblade() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

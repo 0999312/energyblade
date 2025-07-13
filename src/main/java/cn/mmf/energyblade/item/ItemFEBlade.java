@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import cn.mmf.energyblade.client.render.EnergyBladeBEWLR;
 import cn.mmf.energyblade.energy.FEBladeStorage;
 import cn.mmf.energyblade.energy.FECapabilityProvider;
+import mods.flammpfeil.slashblade.capability.concentrationrank.CapabilityConcentrationRank;
 import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.ChatFormatting;
@@ -110,7 +111,11 @@ public class ItemFEBlade extends ItemSlashBlade {
 	@Override
 	public boolean isBarVisible(ItemStack stack) {
 		return stack.getCapability(ForgeCapabilities.ENERGY).filter(FEBladeStorage.class::isInstance)
-				.map(FEBladeStorage.class::cast).map(energy -> isShiftKeyDown()).orElse(false);
+				.map(FEBladeStorage.class::cast)
+				.map(energy -> 
+					isShiftKeyDown() || energy.isPowered()
+					)
+				.orElse(false);
 	}
 
 	@Override
@@ -148,7 +153,7 @@ public class ItemFEBlade extends ItemSlashBlade {
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		super.initCapabilities(stack, nbt);
 
-		return new FECapabilityProvider(stack, 0, 2000000, 20000, 20000, false);
+		return new FECapabilityProvider(stack, 0, 2000000, 1000, 100, false);
 	}
 
 	@Override
@@ -175,7 +180,7 @@ public class ItemFEBlade extends ItemSlashBlade {
 		if (!(event.getEntity() instanceof LivingEntity)) {
 			return;
 		}
-
+		LivingEntity living = (LivingEntity) event.getEntity();
 		if (!event.isSelected()) {
 			return;
 		}
@@ -183,8 +188,10 @@ public class ItemFEBlade extends ItemSlashBlade {
 		event.getBlade().getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> {
 			if (energy instanceof FEBladeStorage bladeFE) {
 				if (bladeFE.isPowered()) {
-					if (bladeFE.extractEnergy(100, true) == 100) {
-						bladeFE.extractEnergy(100, false);
+					if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
+						bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
+						living.getCapability(CapabilityConcentrationRank.RANK_POINT)
+	                    .ifPresent(cap->cap.addRankPoint(living, cap.getMaxCapacity()));
 					} else {
 						bladeFE.setPowered(false);
 						event.getEntity().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);
@@ -199,8 +206,8 @@ public class ItemFEBlade extends ItemSlashBlade {
 		event.getBlade().getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> {
 			if (energy instanceof FEBladeStorage bladeFE) {
 				if (bladeFE.isPowered()) {
-					if (bladeFE.extractEnergy(100, true) == 100) {
-						bladeFE.extractEnergy(100, false);
+					if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
+						bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
 					} else {
 						bladeFE.setPowered(false);
 						event.getUser().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);

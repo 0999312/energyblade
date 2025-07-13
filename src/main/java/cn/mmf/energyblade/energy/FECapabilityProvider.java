@@ -15,10 +15,10 @@ public class FECapabilityProvider extends NamedBladeStateCapabilityProvider {
 	private final LazyOptional<IEnergyStorage> lazyOptional;
 	private final FEBladeStorage energyStorage;
 
-	public FECapabilityProvider(ItemStack stack, int energy, int capacity, int maxReceive, int maxExtract,
+	public FECapabilityProvider(ItemStack stack, int energy, int capacity, int powerupExtract, int standbyExtract,
 			boolean energyDurability) {
 		super(stack);
-		this.energyStorage = new FEBladeStorage(energy, capacity, maxReceive, maxExtract, energyDurability);
+		this.energyStorage = new FEBladeStorage(energy, capacity, powerupExtract, standbyExtract, energyDurability);
 		this.lazyOptional = LazyOptional.of(() -> energyStorage);
 	}
 

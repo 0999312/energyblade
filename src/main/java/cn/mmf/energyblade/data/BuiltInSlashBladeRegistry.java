@@ -19,10 +19,10 @@ public class BuiltInSlashBladeRegistry {
 	public static void registerAll(BootstapContext<SlashBladeDefinition> bootstrap) {
 
 		bootstrap.register(HF_BLADE, new SlashBladeDefinition(Energyblade.FORGE_ENERGY_BLADE.getId(),
-				ResourceLocation.fromNamespaceAndPath(Energyblade.MODID, "hf_blade"),
+				new ResourceLocation(Energyblade.MODID, "hf_blade"),
 				RenderDefinition.Builder.newInstance()
-						.textureName(ResourceLocation.fromNamespaceAndPath(Energyblade.MODID, "model/hf_blade.png"))
-						.modelName(ResourceLocation.fromNamespaceAndPath(Energyblade.MODID, "model/hf_blade.obj"))
+						.textureName(new ResourceLocation(Energyblade.MODID, "model/hf_blade.png"))
+						.modelName(new ResourceLocation(Energyblade.MODID, "model/hf_blade.obj"))
 						.standbyRenderType(CarryType.PSO2).build(),
 				PropertiesDefinition.Builder.newInstance().baseAttackModifier(7.0F).maxDamage(50)
 						.defaultSwordType(List.of(SwordType.BEWITCHED))
@@ -33,7 +33,7 @@ public class BuiltInSlashBladeRegistry {
 
 	private static ResourceKey<SlashBladeDefinition> register(String id) {
 		ResourceKey<SlashBladeDefinition> loc = ResourceKey.create(SlashBladeDefinition.REGISTRY_KEY,
-				ResourceLocation.fromNamespaceAndPath(Energyblade.MODID, id));
+				new ResourceLocation(Energyblade.MODID, id));
 		return loc;
 	}
 }

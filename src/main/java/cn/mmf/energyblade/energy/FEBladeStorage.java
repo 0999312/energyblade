@@ -13,10 +13,16 @@ public class FEBladeStorage implements IEnergyStorage, INBTSerializable<Compound
 	protected int capacity;
 
 	// 每tick最大可接收的能量
-	protected int maxReceive;
+	protected int maxReceive = 20000;
 
 	// 每tick最大可提取的能量
-	protected int maxExtract;
+	protected int maxExtract = 20000;
+	
+	// 充能消耗的能量
+	protected int powerupExtract;
+
+	// 待机时消耗的能量
+	protected int standbyExtract;
 
 	// 能量替换耐久显示(即无耐久设定)
 	protected boolean energyDurability;
@@ -25,11 +31,11 @@ public class FEBladeStorage implements IEnergyStorage, INBTSerializable<Compound
 	protected boolean isPowered = false;
 
 
-	public FEBladeStorage(int energy, int capacity, int maxReceive, int maxExtract, boolean energyDurability) {
+	public FEBladeStorage(int energy, int capacity, int powerupExtract, int standbyExtract, boolean energyDurability) {
 		this.energy = energy;
 		this.capacity = capacity;
-		this.maxReceive = maxReceive;
-		this.maxExtract = maxExtract;
+		this.powerupExtract = powerupExtract;
+		this.standbyExtract = standbyExtract;
 		this.energyDurability = energyDurability;
 	}
 
@@ -68,6 +74,11 @@ public class FEBladeStorage implements IEnergyStorage, INBTSerializable<Compound
 	public int getMaxEnergyStored() {
 		return capacity;
 	}
+	
+
+	public void setMaxEnergyStored(int capacity) {
+		this.capacity = capacity;
+	}
 
 	@Override
 	public boolean canReceive() {
@@ -82,6 +93,22 @@ public class FEBladeStorage implements IEnergyStorage, INBTSerializable<Compound
 	public boolean isEnergyDurability() {
 		return energyDurability;
 	}
+	
+	public int getPowerupExtract() {
+		return powerupExtract;
+	}
+
+	public void setPowerupExtract(int powerupExtract) {
+		this.powerupExtract = powerupExtract;
+	}
+
+	public int getStandbyExtract() {
+		return standbyExtract;
+	}
+
+	public void setStandbyExtract(int standbyExtract) {
+		this.standbyExtract = standbyExtract;
+	}
 
 	@Override
 	public CompoundTag serializeNBT() {
@@ -90,6 +117,8 @@ public class FEBladeStorage implements IEnergyStorage, INBTSerializable<Compound
 		tag.putInt("Capacity", capacity);
 		tag.putInt("MaxReceive", maxReceive);
 		tag.putInt("MaxExtract", maxExtract);
+		tag.putInt("PowerupExtract", powerupExtract);
+		tag.putInt("StandbyExtract", standbyExtract);
 		tag.putBoolean("EnergyDurability", energyDurability);
 		tag.putBoolean("isPowered", isPowered);
 		return tag;
@@ -102,6 +131,8 @@ public class FEBladeStorage implements IEnergyStorage, INBTSerializable<Compound
 			capacity = nbt.getInt("Capacity");
 			maxReceive = nbt.getInt("MaxReceive");
 			maxExtract = nbt.getInt("MaxExtract");
+			powerupExtract = nbt.getInt("PowerupExtract");
+			standbyExtract = nbt.getInt("StandbyExtract");
 			energyDurability = nbt.getBoolean("EnergyDurability");
 			isPowered = nbt.getBoolean("isPowered");
 		}

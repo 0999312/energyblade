@@ -18,7 +18,7 @@ public class NetworkPacketHandler {
     }
 
     public static void registerMessage() {
-        INSTANCE = NetworkRegistry.newSimpleChannel(ResourceLocation.fromNamespaceAndPath(Energyblade.MODID, "network"),
+        INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(Energyblade.MODID, "network"),
                 () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
         INSTANCE.messageBuilder(PowerSwitchPacket.class, nextID(), NetworkDirection.PLAY_TO_SERVER)
