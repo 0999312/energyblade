@@ -15,7 +15,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.awt.*;
 
@@ -28,8 +29,8 @@ public class EnergyBladeBEWLR extends SlashBladeTEISR {
 	@Override
 	public void renderIcon(ItemStack stack, PoseStack matrixStack, MultiBufferSource bufferIn, int lightIn, float scale,
 			boolean renderDurability) {
-		stack.getCapability(ForgeCapabilities.ENERGY).filter(FEBladeStorage.class::isInstance)
-				.map(FEBladeStorage.class::cast).ifPresentOrElse(energy -> {
+		IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+		if (energyStorage instanceof FEBladeStorage energy) {
 					if (!energy.isEnergyDurability()) {
 						super.renderIcon(stack, matrixStack, bufferIn, lightIn, scale, renderDurability);
 						return;
@@ -73,9 +74,9 @@ public class EnergyBladeBEWLR extends SlashBladeTEISR {
 								DefaultResources.resourceDurabilityTexture, matrixStack, bufferIn, lightIn);
 
 					}
-				}, () -> {
+		} else {
 					super.renderIcon(stack, matrixStack, bufferIn, lightIn, scale, renderDurability);
-				});
+				}
 
 	}
 }
