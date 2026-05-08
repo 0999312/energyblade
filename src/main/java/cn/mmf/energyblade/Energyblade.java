@@ -1,40 +1,37 @@
 package cn.mmf.energyblade;
 
-import com.mojang.logging.LogUtils;
-
 import cn.mmf.energyblade.item.ItemFEBlade;
+import com.mojang.logging.LogUtils;
 import mods.flammpfeil.slashblade.item.ItemTierSlashBlade;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
+
+import java.util.function.Supplier;
 
 @Mod(Energyblade.MODID)
 public class Energyblade {
-	public static final String MODID = "energyblade";
-	private static final Logger LOGGER = LogUtils.getLogger();
+    public static final String MODID = "energyblade";
+    private static final Logger LOGGER = LogUtils.getLogger();
 
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, MODID);
+    public static final Supplier<Item> FORGE_ENERGY_BLADE = ITEMS.register("forge_energy_blade",
+            () -> new ItemFEBlade(new ItemTierSlashBlade(40, 4F), 4, -2.4F, (new Item.Properties())));
 
-	// FE能量拔刀剑
-	public static final RegistryObject<Item> FORGE_ENERGY_BLADE = ITEMS.register("forge_energy_blade",
-			() -> new ItemFEBlade(new ItemTierSlashBlade(40, 4F), 4, -2.4F, (new Item.Properties())));
-
-	public Energyblade() {
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-	}
+    public Energyblade(IEventBus modBus) {
+        ITEMS.register(modBus);
+        modBus.addListener(this::setup);
+    }
 
     private void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(NetworkPacketHandler::registerMessage);
     }
-	
-	public static Logger getLogger() {
-		return LOGGER;
-	}
 
+    public static Logger getLogger() {
+        return LOGGER;
+    }
 }
