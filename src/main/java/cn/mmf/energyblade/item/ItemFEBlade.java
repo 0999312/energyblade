@@ -4,7 +4,6 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import cn.mmf.energyblade.client.render.EnergyBladeBEWLR;
 import cn.mmf.energyblade.energy.FEBladeStorage;
-import cn.mmf.energyblade.energy.FECapabilityProvider;
 import mods.flammpfeil.slashblade.capability.concentrationrank.CapabilityConcentrationRank;
 import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -12,7 +11,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,8 +21,8 @@ import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 
@@ -44,10 +42,11 @@ public class ItemFEBlade extends ItemSlashBlade {
 
 	@Override
 	public boolean isDamageable(ItemStack stack) {
-		return stack.getCapability(ForgeCapabilities.ENERGY).filter(FEBladeStorage.class::isInstance)
-				.map(FEBladeStorage.class::cast).filter(FEBladeStorage::isEnergyDurability) // 当启用能量代替耐久时
-				.map(energy -> false) // 禁用原版耐久机制
-				.orElseGet(() -> super.isDamageable(stack)); // 否则继承默认逻辑
+		if (stack.getCapability(Capabilities.EnergyStorage.ITEM) instanceof FEBladeStorage energy
+				&& energy.isEnergyDurability()) {
+			return false;
+		}
+		return super.isDamageable(stack);
 	}
 
 	@Nullable
@@ -58,10 +57,6 @@ public class ItemFEBlade extends ItemSlashBlade {
 			if (!state.isEmpty())
 				tag.put("bladeState", state.serializeNBT());
 		});
-		stack.getCapability(ForgeCapabilities.ENERGY).filter(FEBladeStorage.class::isInstance)
-				.map(FEBladeStorage.class::cast).ifPresent(energy -> {
-					tag.put("Energy", energy.serializeNBT());
-				});
 		return tag;
 	}
 
@@ -70,10 +65,6 @@ public class ItemFEBlade extends ItemSlashBlade {
 		if (nbt != null) {
 			if (nbt.contains("bladeState"))
 				stack.getCapability(BLADESTATE).ifPresent(state -> state.deserializeNBT(nbt.getCompound("bladeState")));
-			if (nbt.contains("Energy"))
-				stack.getCapability(ForgeCapabilities.ENERGY).filter(FEBladeStorage.class::isInstance)
-						.map(FEBladeStorage.class::cast)
-						.ifPresent(energy -> energy.deserializeNBT(nbt.getCompound("Energy")));
 		}
 		super.readShareTag(stack, nbt);
 	}
@@ -88,8 +79,7 @@ public class ItemFEBlade extends ItemSlashBlade {
 	// 能量显示
 	@OnlyIn(Dist.CLIENT)
 	public void appendForgeEnergyInfo(ItemStack stack, List<Component> tooltip) {
-		stack.getCapability(ForgeCapabilities.ENERGY).filter(FEBladeStorage.class::isInstance)
-				.map(FEBladeStorage.class::cast).ifPresent(energy -> {
+		if (stack.getCapability(Capabilities.EnergyStorage.ITEM) instanceof FEBladeStorage energy) {
 					Minecraft mc = Minecraft.getInstance();
 					KeyMapping shift = mc.options.keyShift;
 					if (!isShiftKeyDown()) {
@@ -103,29 +93,27 @@ public class ItemFEBlade extends ItemSlashBlade {
 								.literal(energy.getEnergyStored() + " / " + energy.getMaxEnergyStored())
 								.withStyle(ChatFormatting.GOLD);
 						tooltip.add(Component.translatable("tip.energyblade.forge_energy_info", energyTip)
-								.withStyle(ChatFormatting.GRAY));
-					}
-				});
+						.withStyle(ChatFormatting.GRAY));
+				}
+		}
 	}
 
 	@Override
 	public boolean isBarVisible(ItemStack stack) {
-		return stack.getCapability(ForgeCapabilities.ENERGY).filter(FEBladeStorage.class::isInstance)
-				.map(FEBladeStorage.class::cast)
-				.map(energy -> 
-					isShiftKeyDown() || energy.isPowered()
-					)
-				.orElse(false);
+		if (stack.getCapability(Capabilities.EnergyStorage.ITEM) instanceof FEBladeStorage energy) {
+			return isShiftKeyDown() || energy.isPowered();
+		}
+		return false;
 	}
 
 	@Override
 	public int getBarWidth(ItemStack stack) {
-		return stack.getCapability(ForgeCapabilities.ENERGY).filter(FEBladeStorage.class::isInstance)
-				.map(FEBladeStorage.class::cast).filter(energy -> energy.getMaxEnergyStored() > 0) // 防止除以零
-				.map(energy -> {
-					double ratio = (double) energy.getEnergyStored() / energy.getMaxEnergyStored();
-					return (int) (ratio * MAX_BAR_WIDTH);
-				}).orElse(0); // 无能量存储时返回0
+		if (stack.getCapability(Capabilities.EnergyStorage.ITEM) instanceof FEBladeStorage energy
+				&& energy.getMaxEnergyStored() > 0) {
+			double ratio = (double) energy.getEnergyStored() / energy.getMaxEnergyStored();
+			return (int) (ratio * MAX_BAR_WIDTH);
+		}
+		return 0;
 	}
 
 	@Override
@@ -146,14 +134,6 @@ public class ItemFEBlade extends ItemSlashBlade {
 				return renderer;
 			}
 		});
-	}
-
-	// 覆写该方法用以修改拔刀剑的能力(具体参考FECapabilityProvider类)
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		super.initCapabilities(stack, nbt);
-
-		return new FECapabilityProvider(stack, 0, 2000000, 1000, 100, false);
 	}
 
 	@Override
@@ -185,8 +165,8 @@ public class ItemFEBlade extends ItemSlashBlade {
 			return;
 		}
 
-		event.getBlade().getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> {
-			if (energy instanceof FEBladeStorage bladeFE) {
+		IEnergyStorage energyStorage = event.getBlade().getCapability(Capabilities.EnergyStorage.ITEM);
+		if (energyStorage instanceof FEBladeStorage bladeFE) {
 				if (bladeFE.isPowered()) {
 					if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
 						bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
@@ -198,13 +178,13 @@ public class ItemFEBlade extends ItemSlashBlade {
 					}
 				}
 			}
-		});
+		}
 	}
 	
 	@SubscribeEvent
 	public static void onSlashBladeHit(SlashBladeEvent.HitEvent event) {
-		event.getBlade().getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> {
-			if (energy instanceof FEBladeStorage bladeFE) {
+		IEnergyStorage energyStorage = event.getBlade().getCapability(Capabilities.EnergyStorage.ITEM);
+		if (energyStorage instanceof FEBladeStorage bladeFE) {
 				if (bladeFE.isPowered()) {
 					if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
 						bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
@@ -214,17 +194,17 @@ public class ItemFEBlade extends ItemSlashBlade {
 					}
 				}
 			}
-		});
+		}
 	}
 
 	@SubscribeEvent
 	public static void onSlashBladePowered(SlashBladeEvent.PowerBladeEvent event) {
-		event.getBlade().getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> {
-			if (energy instanceof FEBladeStorage bladeFE) {
+		IEnergyStorage energyStorage = event.getBlade().getCapability(Capabilities.EnergyStorage.ITEM);
+		if (energyStorage instanceof FEBladeStorage bladeFE) {
 				if (bladeFE.isPowered()) {
 					event.setPowered(true);
 				}
 			}
-		});
+		}
 	}
 }
