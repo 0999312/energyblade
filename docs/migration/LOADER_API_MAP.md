@@ -26,6 +26,17 @@
 | LAM-10 | `mandatory = true` / `false` | 必需/可选依赖标记 | `type = "required"` / `"optional"` / `"incompatible"` / `"discouraged"` | docs.neoforged.net § Dependency Configurations | Confirmed | |
 | LAM-11 | `net.minecraftforge.gradle` + `minecraft {}` DSL | ForgeGradle 构建插件 | `net.neoforged.moddev` v2.0.141 + `neoForge {}` DSL | NeoForge MDK GitHub | Confirmed | 用户指定使用 moddev 插件 |
 | LAM-12 | `fg.deobf()` 依赖包装 | 依赖混淆映射处理 | 完全移除 — ModDevGradle 自动处理重映射 | NeoForge MDK GitHub | Confirmed | 直接用 `implementation`/`compileOnly` |
+| LAM-13 | `net.minecraftforge.api.distmarker.Dist` | 客户端/服务端区分 | `net.neoforged.api.distmarker.Dist` | docs.neoforged.net § Sides | Confirmed | `Dist.CLIENT` 不变 |
+| LAM-14 | `net.minecraftforge.api.distmarker.OnlyIn` | 仅客户端代码标记 | `net.neoforged.api.distmarker.OnlyIn` | docs.neoforged.net § Sides | Confirmed | |
+| LAM-15 | `net.minecraftforge.fml.common.Mod.EventBusSubscriber` (内部类) | 自动注册事件监听器 | `net.neoforged.fml.common.EventBusSubscriber` (顶层类) | docs.neoforged.net § Events | Confirmed | **必须添加 `modid` 参数** |
+| LAM-16 | `net.minecraftforge.eventbus.api.SubscribeEvent` | 事件处理器注解 | `net.neoforged.bus.api.SubscribeEvent` | docs.neoforged.net § Events | Confirmed | |
+| LAM-17 | `net.minecraftforge.client.event.ModelEvent` | 模型加载/烘焙事件 | `net.neoforged.neoforge.client.event.ModelEvent` | docs.neoforged.net § BakedModels | Confirmed | `ModifyBakingResult` 内部类不变 |
+| LAM-18 | `net.minecraftforge.client.event.RegisterKeyMappingsEvent` | 注册按键绑定 | `net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent` | docs.neoforged.net § KeyMappings | Confirmed | |
+| LAM-19 | `net.minecraftforge.client.event.InputEvent` | 输入事件 | `net.neoforged.neoforge.client.event.InputEvent` | docs.neoforged.net § KeyMappings | Confirmed | NeoForge 建议用 `ClientTickEvent.Post` 替代 |
+| LAM-20 | `net.minecraftforge.client.settings.KeyConflictContext` | 按键冲突上下文 | `net.neoforged.neoforge.client.settings.KeyConflictContext` | docs.neoforged.net § KeyMappings | Confirmed | 现在实现 `IKeyConflictContext` 接口 |
+| LAM-21 | `net.minecraftforge.client.settings.KeyModifier` | 按键修饰符 | `net.neoforged.neoforge.client.settings.KeyModifier` | docs.neoforged.net § KeyMappings | Confirmed | |
+| LAM-22 | `net.minecraftforge.client.extensions.common.IClientItemExtensions` | 自定义物品渲染 | `net.neoforged.neoforge.client.extensions.common.IClientItemExtensions` | docs.neoforged.net § BER | Confirmed | 注册方式改为 `RegisterClientExtensionsEvent` (Phase 6) |
+| LAM-23 | `net.minecraftforge.data.event.GatherDataEvent` | 数据生成入口 | `net.neoforged.neoforge.data.event.GatherDataEvent` | docs.neoforged.net § Resources | Confirmed | Datagen 迁移属于 Phase 5 |
 
 ## Open
 
