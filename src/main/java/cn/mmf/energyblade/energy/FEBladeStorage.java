@@ -1,148 +1,110 @@
 package cn.mmf.energyblade.energy;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.capabilities.AutoRegisterCapability;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.energy.IEnergyStorage;
+import cn.mmf.energyblade.Energyblade;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.minecraft.world.item.ItemStack;
 
-@AutoRegisterCapability // 用于自动注册能力(capbility)
-public class FEBladeStorage implements IEnergyStorage, INBTSerializable<CompoundTag> {
-	// 当前存储的能量
-	protected int energy;
-	// 最大可存储的能量
-	protected int capacity;
+public class FEBladeStorage implements IEnergyStorage {
+    private final ItemStack stack;
 
-	// 每tick最大可接收的能量
-	protected int maxReceive = 20000;
+    public FEBladeStorage(ItemStack stack) {
+        this.stack = stack;
+    }
 
-	// 每tick最大可提取的能量
-	protected int maxExtract = 20000;
-	
-	// 充能消耗的能量
-	protected int powerupExtract;
+    private Energyblade.EnergyBladeData getData() {
+        return stack.getOrDefault(Energyblade.ENERGY_BLADE_DATA.get(), Energyblade.EnergyBladeData.DEFAULT);
+    }
 
-	// 待机时消耗的能量
-	protected int standbyExtract;
+    @Override
+    public int receiveEnergy(int toReceive, boolean simulate) {
+        if (!canReceive()) return 0;
+        Energyblade.EnergyBladeData data = getData();
+        int energyReceived = Math.min(data.capacity() - data.energy(), Math.min(data.maxReceive(), toReceive));
+        if (energyReceived > 0 && !simulate) {
+            int newEnergy = data.energy() + energyReceived;
+            stack.set(Energyblade.ENERGY_BLADE_DATA.get(), new Energyblade.EnergyBladeData(
+                    newEnergy, data.capacity(), data.maxReceive(), data.maxExtract(),
+                    data.powerupExtract(), data.standbyExtract(), data.energyDurability(), data.isPowered()));
+        }
+        return energyReceived;
+    }
 
-	// 能量替换耐久显示(即无耐久设定)
-	protected boolean energyDurability;
-	
-	// 是否正在启用
-	protected boolean isPowered = false;
+    @Override
+    public int extractEnergy(int toExtract, boolean simulate) {
+        if (!canExtract()) return 0;
+        Energyblade.EnergyBladeData data = getData();
+        int energyExtracted = Math.min(data.energy(), Math.min(data.maxExtract(), toExtract));
+        if (energyExtracted > 0 && !simulate) {
+            int newEnergy = data.energy() - energyExtracted;
+            boolean powered = newEnergy > 0 && data.isPowered();
+            stack.set(Energyblade.ENERGY_BLADE_DATA.get(), new Energyblade.EnergyBladeData(
+                    newEnergy, data.capacity(), data.maxReceive(), data.maxExtract(),
+                    data.powerupExtract(), data.standbyExtract(), data.energyDurability(), powered));
+        }
+        return energyExtracted;
+    }
 
+    @Override
+    public int getEnergyStored() {
+        return getData().energy();
+    }
 
-	public FEBladeStorage(int energy, int capacity, int powerupExtract, int standbyExtract, boolean energyDurability) {
-		this.energy = energy;
-		this.capacity = capacity;
-		this.powerupExtract = powerupExtract;
-		this.standbyExtract = standbyExtract;
-		this.energyDurability = energyDurability;
-	}
+    @Override
+    public int getMaxEnergyStored() {
+        return getData().capacity();
+    }
 
-	@Override
-	public int receiveEnergy(int maxReceive, boolean simulate) {
-		if (!canReceive())
-			return 0;
+    @Override
+    public boolean canReceive() {
+        return getData().maxReceive() > 0;
+    }
 
-		int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
-		if (!simulate)
-			energy += energyReceived;
-		return energyReceived;
-	}
+    @Override
+    public boolean canExtract() {
+        return getData().maxExtract() > 0;
+    }
 
-	@Override
-	public int extractEnergy(int maxExtract, boolean simulate) {
-		if (!canExtract())
-			return 0;
+    public boolean isPowered() {
+        return getData().isPowered();
+    }
 
-		int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
-		if (!simulate) {
-			energy -= energyExtracted;
-			if(energy <= 0) {
-				this.setPowered(false);
-			}
-		}
-		return energyExtracted;
-	}
+    public void setPowered(boolean powered) {
+        Energyblade.EnergyBladeData data = getData();
+        stack.set(Energyblade.ENERGY_BLADE_DATA.get(), new Energyblade.EnergyBladeData(
+                data.energy(), data.capacity(), data.maxReceive(), data.maxExtract(),
+                data.powerupExtract(), data.standbyExtract(), data.energyDurability(), powered));
+    }
 
-	@Override
-	public int getEnergyStored() {
-		return energy;
-	}
+    public void setMaxEnergyStored(int capacity) {
+        Energyblade.EnergyBladeData data = getData();
+        stack.set(Energyblade.ENERGY_BLADE_DATA.get(), new Energyblade.EnergyBladeData(
+                data.energy(), capacity, data.maxReceive(), data.maxExtract(),
+                data.powerupExtract(), data.standbyExtract(), data.energyDurability(), data.isPowered()));
+    }
 
-	@Override
-	public int getMaxEnergyStored() {
-		return capacity;
-	}
-	
+    public void setPowerupExtract(int powerupExtract) {
+        Energyblade.EnergyBladeData data = getData();
+        stack.set(Energyblade.ENERGY_BLADE_DATA.get(), new Energyblade.EnergyBladeData(
+                data.energy(), data.capacity(), data.maxReceive(), data.maxExtract(),
+                powerupExtract, data.standbyExtract(), data.energyDurability(), data.isPowered()));
+    }
 
-	public void setMaxEnergyStored(int capacity) {
-		this.capacity = capacity;
-	}
+    public int getPowerupExtract() {
+        return getData().powerupExtract();
+    }
 
-	@Override
-	public boolean canReceive() {
-		return this.maxReceive > 0;
-	}
+    public int getStandbyExtract() {
+        return getData().standbyExtract();
+    }
 
-	@Override
-	public boolean canExtract() {
-		return this.maxExtract > 0;
-	}
+    public void setStandbyExtract(int standbyExtract) {
+        Energyblade.EnergyBladeData data = getData();
+        stack.set(Energyblade.ENERGY_BLADE_DATA.get(), new Energyblade.EnergyBladeData(
+                data.energy(), data.capacity(), data.maxReceive(), data.maxExtract(),
+                data.powerupExtract(), standbyExtract, data.energyDurability(), data.isPowered()));
+    }
 
-	public boolean isEnergyDurability() {
-		return energyDurability;
-	}
-	
-	public int getPowerupExtract() {
-		return powerupExtract;
-	}
-
-	public void setPowerupExtract(int powerupExtract) {
-		this.powerupExtract = powerupExtract;
-	}
-
-	public int getStandbyExtract() {
-		return standbyExtract;
-	}
-
-	public void setStandbyExtract(int standbyExtract) {
-		this.standbyExtract = standbyExtract;
-	}
-
-	@Override
-	public CompoundTag serializeNBT() {
-		CompoundTag tag = new CompoundTag();
-		tag.putInt("Energy", energy);
-		tag.putInt("Capacity", capacity);
-		tag.putInt("MaxReceive", maxReceive);
-		tag.putInt("MaxExtract", maxExtract);
-		tag.putInt("PowerupExtract", powerupExtract);
-		tag.putInt("StandbyExtract", standbyExtract);
-		tag.putBoolean("EnergyDurability", energyDurability);
-		tag.putBoolean("isPowered", isPowered);
-		return tag;
-	}
-
-	@Override
-	public void deserializeNBT(CompoundTag nbt) {
-		if (nbt != null) {
-			energy = nbt.getInt("Energy");
-			capacity = nbt.getInt("Capacity");
-			maxReceive = nbt.getInt("MaxReceive");
-			maxExtract = nbt.getInt("MaxExtract");
-			powerupExtract = nbt.getInt("PowerupExtract");
-			standbyExtract = nbt.getInt("StandbyExtract");
-			energyDurability = nbt.getBoolean("EnergyDurability");
-			isPowered = nbt.getBoolean("isPowered");
-		}
-	}
-	
-	public boolean isPowered() {
-		return isPowered;
-	}
-
-	public void setPowered(boolean isPowered) {
-		this.isPowered = isPowered;
-	}
+    public boolean isEnergyDurability() {
+        return getData().energyDurability();
+    }
 }
