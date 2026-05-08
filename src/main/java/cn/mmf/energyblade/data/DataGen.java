@@ -9,10 +9,10 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 @EventBusSubscriber(modid = Energyblade.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class DataGen {
@@ -22,7 +22,7 @@ public class DataGen {
 		CompletableFuture<Provider> lookupProvider = event.getLookupProvider();
 		PackOutput packOutput = dataGenerator.getPackOutput();
 
-		dataGenerator.addProvider(event.includeServer(), new SlashBladeRecipeProvider(packOutput));
+		dataGenerator.addProvider(event.includeServer(), new SlashBladeRecipeProvider(packOutput, lookupProvider));
 
 
 		final RegistrySetBuilder bladeBuilder = new RegistrySetBuilder().add(SlashBladeDefinition.REGISTRY_KEY,
