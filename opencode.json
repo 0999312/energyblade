@@ -1,0 +1,95 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "shell": "pwsh",
+  "default_agent": "build",
+  "share": "disabled",
+  "instructions": [
+    "AGENTS.md"
+  ],
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 18000
+  },
+  "watcher": {
+    "ignore": [
+      ".git/**",
+      ".gradle/**",
+      "build/**",
+      "run/**",
+      "out/**",
+      "logs/**",
+      "libraries/**",
+      "versions/**",
+      "node_modules/**"
+    ]
+  },
+  "mcp": {
+    "mc-source": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@mcdxai/minecraft-dev-mcp"
+      ],
+      "enabled": true,
+      "environment": {
+        "LOG_LEVEL": "INFO"
+      },
+      "timeout": 20000
+    },
+    "loader-docs": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "mcmodding-mcp"
+      ],
+      "enabled": true,
+      "timeout": 15000
+    }
+  },
+  "permission": {
+    "mc-source_*": "deny",
+    "loader-docs_*": "deny"
+  },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "description": "执行当前迁移步骤，最小改动实现并在必要时调用专用研究代理",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "loader-diff-research": "allow",
+          "vanilla-code-research": "allow",
+          "port-review": "allow",
+          "explore": "allow",
+          "general": "allow"
+        }
+      }
+    },
+    "plan": {
+      "mode": "primary",
+      "description": "分析迁移影响、制定 phase 和交接信息，不直接改代码",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "deny",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "./gradlew*": "allow",
+          "gradlew*": "allow"
+        },
+        "task": {
+          "*": "deny",
+          "loader-diff-research": "allow",
+          "vanilla-code-research": "allow",
+          "port-review": "allow",
+          "explore": "allow",
+          "general": "allow"
+        },
+        "webfetch": "allow"
+      }
+    }
+  }
+}
