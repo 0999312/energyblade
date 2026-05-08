@@ -40,11 +40,11 @@ Requirements for the migration. Each maps to a roadmap phase.
 
 ### Datagen & Resources
 
-- [ ] **GEN-01**: `GatherDataEvent` migrated to NeoForge datagen API
-- [ ] **GEN-02**: `DatapackBuiltinEntriesProvider` updated for NeoForge
-- [ ] **GEN-03**: `SlashBladeRecipeProvider` / `RecipeProvider` / `FinishedRecipe` migrated
-- [ ] **GEN-04**: `IConditionBuilder` migrated to NeoForge conditions
-- [ ] **GEN-05**: `./gradlew runData` succeeds producing same output
+- [x] **GEN-01**: `GatherDataEvent` migrated to NeoForge datagen API
+- [x] **GEN-02**: `DatapackBuiltinEntriesProvider` updated for NeoForge
+- [x] **GEN-03**: `SlashBladeRecipeProvider` / `RecipeProvider` / `FinishedRecipe` migrated
+- [x] **GEN-04**: `IConditionBuilder` migrated to NeoForge conditions
+- [x] **GEN-05**: `./gradlew runData` succeeds producing same output
 
 ### Client Systems
 
@@ -106,11 +106,11 @@ Deferred to post-migration.
 | NET-02 | Phase 4 | Pending |
 | NET-03 | Phase 4 | Pending |
 | NET-04 | Phase 4 | Pending |
-| GEN-01 | Phase 5 | Pending |
-| GEN-02 | Phase 5 | Pending |
-| GEN-03 | Phase 5 | Pending |
-| GEN-04 | Phase 5 | Pending |
-| GEN-05 | Phase 5 | Pending |
+| GEN-01 | Phase 5 | Complete ✓ |
+| GEN-02 | Phase 5 | Complete ✓ |
+| GEN-03 | Phase 5 | Complete ✓ |
+| GEN-04 | Phase 5 | Complete ✓ |
+| GEN-05 | Phase 5 | Complete ✓ |
 | CLI-01 | Phase 6 | Pending |
 | CLI-02 | Phase 6 | Pending |
 | CLI-03 | Phase 6 | Pending |

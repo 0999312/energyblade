@@ -5,14 +5,15 @@
 See: `.planning/PROJECT.md` (updated 2026-05-08)
 
 **Core value:** The mod must compile, load, and function identically on NeoForge 1.21.1
-**Current focus:** Phase 1 — Build And Entry
+**Current focus:** Phase 5 — Datagen And Resources
 
 ## Current Phase
 
-- **Phase:** 1
-- **Name:** Build And Entry
-- **Status:** ready (not started)
-- **Goal:** Upgrade build system and mod entry point to compile against NeoForge 1.21.1
+- **Phase:** 5
+- **Name:** Datagen And Resources
+- **Status:** Completed
+- **Goal:** Migrate recipe and registry datagen to NeoForge data generation API
+- **Plans:** 1 (05-PLAN.md)
 
 ## Requirements Coverage
 
@@ -22,10 +23,10 @@ See: `.planning/PROJECT.md` (updated 2026-05-08)
 | 2 | REG-01..REG-04 (4) | Pending |
 | 3 | DAT-01..DAT-05 (5) | Pending |
 | 4 | NET-01..NET-04 (4) | Pending |
-| 5 | GEN-01..GEN-05 (5) | Pending |
+| 5 | GEN-01..GEN-05 (5) | Complete (5/5) |
 | 6 | CLI-01..CLI-07 (7) | Pending |
 | 7 | CLN-01..CLN-05 (5) | Pending |
-| **Total** | **35** | 0 complete |
+| **Total** | **35** | 5 complete |
 
 ## Artifacts
 
@@ -44,4 +45,4 @@ See: `.planning/PROJECT.md` (updated 2026-05-08)
 
 ## Last Updated
 
-2026-05-08 after project initialization
+2026-05-08 after Phase 5 execution
