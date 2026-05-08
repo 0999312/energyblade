@@ -50,6 +50,14 @@
 | LAM-34 | `DeferredRegister` for cap registration | 能力注册方式 | `DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, MODID)` | docs.neoforged.net § DataComponents | Confirmed | |
 | LAM-35 | `net.minecraftforge.common.util.INBTSerializable` | 序列化工具接口 | 弃用 — 数据组件通过 codec 处理序列化 | docs.neoforged.net § DataComponents | Confirmed | |
 | LAM-36 | `net.minecraftforge.common.capabilities.ForgeCapabilities` | Forge 能力常量 | `net.neoforged.neoforge.capabilities.Capabilities` | docs.neoforged.net § Capabilities | Confirmed | |
+| LAM-37 | `NetworkRegistry.newSimpleChannel` | 网络渠道注册 | `RegisterPayloadHandlersEvent` + `event.registrar("1")` | docs.neoforged.net § Networking | Confirmed | |
+| LAM-38 | `SimpleChannel` 实例变量 | 全局网络实例 | **移除** — `PacketDistributor` 按 payload type 路由 | docs.neoforged.net § Networking | Confirmed | |
+| LAM-39 | `NetworkDirection.PLAY_TO_SERVER` | 网络方向 | `registrar.playToServer()` | docs.neoforged.net § Networking | Confirmed | |
+| LAM-40 | `Supplier<NetworkEvent.Context>` handler | 包处理 | `IPayloadContext` — 无需 `enqueueWork`/`setPacketHandled` | docs.neoforged.net § Networking | Confirmed | |
+| LAM-41 | `PacketDistributor.PLAYER.with(...)` | 发送给指定玩家 | `PacketDistributor.sendToPlayer(serverPlayer, payload)` | docs.neoforged.net § Networking | Confirmed | |
+| LAM-42 | `FriendlyByteBuf` 手动编解码 | 包序列化 | `StreamCodec<ByteBuf, T>` 配合 `ByteBufCodecs` | docs.neoforged.net § StreamCodecs | Confirmed | |
+| LAM-43 | N/A (新增) | Payload 唯一标识 | `CustomPacketPayload.Type<T>` 配合 `ResourceLocation` | docs.neoforged.net § Networking | Confirmed | |
+| LAM-44 | N/A (新增) | 包处理上下文 | `IPayloadContext` — 替代 `NetworkEvent.Context` | docs.neoforged.net § Networking | Confirmed | |
 
 ## Open
 
