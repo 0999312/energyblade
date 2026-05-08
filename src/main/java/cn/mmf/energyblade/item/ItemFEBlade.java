@@ -167,31 +167,29 @@ public class ItemFEBlade extends ItemSlashBlade {
 
 		IEnergyStorage energyStorage = event.getBlade().getCapability(Capabilities.EnergyStorage.ITEM);
 		if (energyStorage instanceof FEBladeStorage bladeFE) {
-				if (bladeFE.isPowered()) {
-					if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
-						bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
-						living.getCapability(CapabilityConcentrationRank.RANK_POINT)
+			if (bladeFE.isPowered()) {
+				if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
+					bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
+					living.getCapability(CapabilityConcentrationRank.RANK_POINT)
 	                    .ifPresent(cap->cap.addRankPoint(living, cap.getMaxCapacity()));
-					} else {
-						bladeFE.setPowered(false);
-						event.getEntity().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);
-					}
+				} else {
+					bladeFE.setPowered(false);
+					event.getEntity().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);
 				}
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onSlashBladeHit(SlashBladeEvent.HitEvent event) {
 		IEnergyStorage energyStorage = event.getBlade().getCapability(Capabilities.EnergyStorage.ITEM);
 		if (energyStorage instanceof FEBladeStorage bladeFE) {
-				if (bladeFE.isPowered()) {
-					if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
-						bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
-					} else {
-						bladeFE.setPowered(false);
-						event.getUser().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);
-					}
+			if (bladeFE.isPowered()) {
+				if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
+					bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
+				} else {
+					bladeFE.setPowered(false);
+					event.getUser().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);
 				}
 			}
 		}
@@ -201,9 +199,8 @@ public class ItemFEBlade extends ItemSlashBlade {
 	public static void onSlashBladePowered(SlashBladeEvent.PowerBladeEvent event) {
 		IEnergyStorage energyStorage = event.getBlade().getCapability(Capabilities.EnergyStorage.ITEM);
 		if (energyStorage instanceof FEBladeStorage bladeFE) {
-				if (bladeFE.isPowered()) {
-					event.setPowered(true);
-				}
+			if (bladeFE.isPowered()) {
+				event.setPowered(true);
 			}
 		}
 	}
