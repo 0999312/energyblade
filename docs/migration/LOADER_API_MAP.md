@@ -37,6 +37,19 @@
 | LAM-21 | `net.minecraftforge.client.settings.KeyModifier` | 按键修饰符 | `net.neoforged.neoforge.client.settings.KeyModifier` | docs.neoforged.net § KeyMappings | Confirmed | |
 | LAM-22 | `net.minecraftforge.client.extensions.common.IClientItemExtensions` | 自定义物品渲染 | `net.neoforged.neoforge.client.extensions.common.IClientItemExtensions` | docs.neoforged.net § BER | Confirmed | 注册方式改为 `RegisterClientExtensionsEvent` (Phase 6) |
 | LAM-23 | `net.minecraftforge.data.event.GatherDataEvent` | 数据生成入口 | `net.neoforged.neoforge.data.event.GatherDataEvent` | docs.neoforged.net § Resources | Confirmed | Datagen 迁移属于 Phase 5 |
+| LAM-24 | `net.minecraftforge.energy.IEnergyStorage` | FE 能量存储接口 | `net.neoforged.neoforge.energy.IEnergyStorage` (相同 6 个方法) | GitHub neoforged/NeoForge | Confirmed | |
+| LAM-25 | `net.minecraftforge.energy.EnergyStorage` | FE 能量存储基类 | `net.neoforged.neoforge.energy.EnergyStorage` | GitHub neoforged/NeoForge | Confirmed | 1.21.1 中未弃用 |
+| LAM-26 | `ForgeCapabilities.ENERGY` | 能量能力键 | `Capabilities.EnergyStorage.ITEM` (`ItemCapability<IEnergyStorage, Void>`) | docs.neoforged.net § Capabilities | Confirmed | |
+| LAM-27 | `LazyOptional<T>` | 延迟能力解析 | **已移除** — `getCapability()` 返回 `T` 或 `null` | docs.neoforged.net § Capabilities | Confirmed | |
+| LAM-28 | `Capability<T>` | 能力键类型 | `ItemCapability<T, C>` (参数化) | docs.neoforged.net § Capabilities | Confirmed | |
+| LAM-29 | `@AutoRegisterCapability` | 自动注册能力 | **已移除** — 使用 `RegisterCapabilitiesEvent` | docs.neoforged.net § Capabilities | Confirmed | |
+| LAM-30 | `Item#initCapabilities()` | 物品能力注入入口 | **已移除** — 使用 `event.registerItem()` | docs.neoforged.net § Capabilities | Confirmed | |
+| LAM-31 | `ICapabilityProvider` | 能力桥接接口 | **已移除** — 无需桥接类 | docs.neoforged.net § Capabilities | Confirmed | |
+| LAM-32 | `stack.getCapability(CAP, side).ifPresent(...)` | 能力查询 | `T v = stack.getCapability(CAP); if (v != null) { ... }` | docs.neoforged.net § Capabilities | Confirmed | |
+| LAM-33 | `INBTSerializable<CompoundTag>` (物品数据) | 能力数据序列化 | `DataComponentType<T>` + `Codec` + `StreamCodec` | docs.neoforged.net § DataComponents | Confirmed | |
+| LAM-34 | `DeferredRegister` for cap registration | 能力注册方式 | `DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, MODID)` | docs.neoforged.net § DataComponents | Confirmed | |
+| LAM-35 | `net.minecraftforge.common.util.INBTSerializable` | 序列化工具接口 | 弃用 — 数据组件通过 codec 处理序列化 | docs.neoforged.net § DataComponents | Confirmed | |
+| LAM-36 | `net.minecraftforge.common.capabilities.ForgeCapabilities` | Forge 能力常量 | `net.neoforged.neoforge.capabilities.Capabilities` | docs.neoforged.net § Capabilities | Confirmed | |
 
 ## Open
 
