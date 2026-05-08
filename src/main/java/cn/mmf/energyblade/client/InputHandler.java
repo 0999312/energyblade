@@ -13,11 +13,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyModifier;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = Energyblade.MODID)
 @OnlyIn(Dist.CLIENT)
@@ -38,7 +40,7 @@ public class InputHandler {
             return;
 
         if(InputHandler.KEY_CHARGE.isDown()) {
-        	NetworkPacketHandler.INSTANCE.sendToServer(new PowerSwitchPacket("triggered"));
+        	PacketDistributor.sendToServer(new PowerSwitchPacket("triggered"));
         }
 	}
 }

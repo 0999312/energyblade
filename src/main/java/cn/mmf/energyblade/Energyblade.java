@@ -14,9 +14,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -72,12 +70,7 @@ public class Energyblade {
     public Energyblade(IEventBus modBus) {
         ITEMS.register(modBus);
         DATA_COMPONENTS.register(modBus);
-        modBus.addListener(this::setup);
         modBus.addListener(this::registerCapabilities);
-    }
-
-    private void setup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(NetworkPacketHandler::registerMessage);
     }
 
     private void registerCapabilities(final RegisterCapabilitiesEvent event) {
