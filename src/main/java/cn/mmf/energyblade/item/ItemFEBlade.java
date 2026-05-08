@@ -20,13 +20,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 // 拓展子类拔刀剑(extends ItemSlashBlade)
-@EventBusSubscriber
+@EventBusSubscriber(modid = Energyblade.MODID)
 public class ItemFEBlade extends ItemSlashBlade {
 
 	public ItemFEBlade(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
