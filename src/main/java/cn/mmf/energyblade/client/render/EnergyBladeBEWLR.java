@@ -3,12 +3,12 @@ package cn.mmf.energyblade.client.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import cn.mmf.energyblade.energy.FEBladeStorage;
+import mods.flammpfeil.slashblade.capability.slashblade.SlashBladeDataComponents;
 import mods.flammpfeil.slashblade.client.renderer.SlashBladeTEISR;
 import mods.flammpfeil.slashblade.client.renderer.model.BladeModelManager;
 import mods.flammpfeil.slashblade.client.renderer.model.obj.WavefrontObject;
 import mods.flammpfeil.slashblade.client.renderer.util.BladeRenderState;
 import mods.flammpfeil.slashblade.init.DefaultResources;
-import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
@@ -37,13 +37,20 @@ public class EnergyBladeBEWLR extends SlashBladeTEISR {
 					}
 					matrixStack.scale(scale, scale, scale);
 
-					ResourceLocation modelLocation = stack.getCapability(ItemSlashBlade.BLADESTATE)
-							.filter(s -> s.getModel().isPresent()).map(s -> s.getModel().get())
-							.orElseGet(() -> stackDefaultModel(stack));
+					ResourceLocation modelLocation;
+					var bladeState = stack.get(SlashBladeDataComponents.BLADE_STATE_DATA);
+					if (bladeState != null && bladeState.model().isPresent()) {
+						modelLocation = bladeState.model().get();
+					} else {
+						modelLocation = stackDefaultModel(stack);
+					}
 					WavefrontObject model = BladeModelManager.getInstance().getModel(modelLocation);
-					ResourceLocation textureLocation = stack.getCapability(ItemSlashBlade.BLADESTATE)
-							.filter(s -> s.getTexture().isPresent()).map(s -> s.getTexture().get())
-							.orElseGet(() -> stackDefaultTexture(stack));
+					ResourceLocation textureLocation;
+					if (bladeState != null && bladeState.texture().isPresent()) {
+						textureLocation = bladeState.texture().get();
+					} else {
+						textureLocation = stackDefaultTexture(stack);
+					}
 
 					String renderTarget = "item_blade";
 

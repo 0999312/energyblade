@@ -2,7 +2,7 @@ package cn.mmf.energyblade.item;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
-import cn.mmf.energyblade.client.render.EnergyBladeBEWLR;
+import cn.mmf.energyblade.Energyblade;
 import cn.mmf.energyblade.energy.FEBladeStorage;
 import mods.flammpfeil.slashblade.capability.concentrationrank.CapabilityConcentrationRank;
 import mods.flammpfeil.slashblade.event.SlashBladeEvent;
@@ -10,27 +10,23 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Consumer;
 
 // 拓展子类拔刀剑(extends ItemSlashBlade)
 @EventBusSubscriber(modid = Energyblade.MODID)
@@ -49,30 +45,11 @@ public class ItemFEBlade extends ItemSlashBlade {
 		return super.isDamageable(stack);
 	}
 
-	@Nullable
 	@Override
-	public CompoundTag getShareTag(ItemStack stack) {
-		var tag = stack.getOrCreateTag();
-		stack.getCapability(BLADESTATE).ifPresent(state -> {
-			if (!state.isEmpty())
-				tag.put("bladeState", state.serializeNBT());
-		});
-		return tag;
-	}
-
-	@Override
-	public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
-		if (nbt != null) {
-			if (nbt.contains("bladeState"))
-				stack.getCapability(BLADESTATE).ifPresent(state -> state.deserializeNBT(nbt.getCompound("bladeState")));
-		}
-		super.readShareTag(stack, nbt);
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, TooltipContext context, @NotNull List<Component> tooltip,
+			@NotNull TooltipFlag flagIn) {
+		// TODO Auto-generated method stub
+		super.appendHoverText(stack, context, tooltip, flagIn);
 		this.appendForgeEnergyInfo(stack, tooltip);
 	}
 
@@ -121,27 +98,6 @@ public class ItemFEBlade extends ItemSlashBlade {
 		return 0xFFAA00; // 金色能量条，避免与原本耐久条混淆
 	}
 
-	// 覆写该方法用以修改拔刀剑渲染(具体参考EnergyBladeBEWLR类)
-	@Override
-	public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-		consumer.accept(new IClientItemExtensions() {
-			BlockEntityWithoutLevelRenderer renderer = new EnergyBladeBEWLR(
-					Minecraft.getInstance().getBlockEntityRenderDispatcher(),
-					Minecraft.getInstance().getEntityModels());
-
-			@Override
-			public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-				return renderer;
-			}
-		});
-	}
-
-	@Override
-	public <T extends LivingEntity> int damageItem(ItemStack arg0, int arg1, T arg2, Consumer<T> arg3) {
-		// TODO 电量耐久适配消耗
-		return super.damageItem(arg0, arg1, arg2, arg3);
-	}
-
 	private boolean isShiftKeyDown() {
 		Minecraft mc = Minecraft.getInstance();
 		KeyMapping shift = mc.options.keyShift;
@@ -170,8 +126,10 @@ public class ItemFEBlade extends ItemSlashBlade {
 			if (bladeFE.isPowered()) {
 				if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
 					bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
-					living.getCapability(CapabilityConcentrationRank.RANK_POINT)
-	                    .ifPresent(cap->cap.addRankPoint(living, cap.getMaxCapacity()));
+					var rank = living.getData(CapabilityConcentrationRank.RANK_POINT.get());
+					if (rank != null) {
+						rank.addRankPoint(living, rank.getMaxCapacity());
+					}
 				} else {
 					bladeFE.setPowered(false);
 					event.getEntity().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);

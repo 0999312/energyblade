@@ -58,8 +58,34 @@
 | LAM-42 | `FriendlyByteBuf` 手动编解码 | 包序列化 | `StreamCodec<ByteBuf, T>` 配合 `ByteBufCodecs` | docs.neoforged.net § StreamCodecs | Confirmed | |
 | LAM-43 | N/A (新增) | Payload 唯一标识 | `CustomPacketPayload.Type<T>` 配合 `ResourceLocation` | docs.neoforged.net § Networking | Confirmed | |
 | LAM-44 | N/A (新增) | 包处理上下文 | `IPayloadContext` — 替代 `NetworkEvent.Context` | docs.neoforged.net § Networking | Confirmed | |
+| LAM-45 | `net.minecraftforge.common.data.DatapackBuiltinEntriesProvider` | 数据生成中注册内建数据包注册表条目 | `net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider` | NeoForge GitHub 1.21.1 + docs.neoforged.net § Registries | Confirmed | 构造函数和 API 不变 |
+| LAM-46 | `Consumer<FinishedRecipe>` + `buildRecipes(Consumer)` | RecipeProvider 食谱构建参数 | `RecipeOutput` + `protected void buildRecipes(RecipeOutput)` | docs.neoforged.net § Recipes § Data Generation | Confirmed | FinishedRecipe 类已移除 |
+| LAM-47 | `RecipeProvider(PackOutput)` | RecipeProvider 单参构造 | `RecipeProvider(PackOutput, CompletableFuture<HolderLookup.Provider>)` | docs.neoforged.net § Recipes § Data Generation | Confirmed | |
+| LAM-48 | `.save(Consumer<FinishedRecipe>)` | 保存食谱构建结果 | `.save(RecipeOutput)` 或 `.save(RecipeOutput, String)` | docs.neoforged.net § Built-In Recipe Types | Confirmed | |
+| LAM-49 | `net.minecraftforge.common.crafting.conditions.IConditionBuilder` | 食谱条件构建器接口 | `net.neoforged.neoforge.common.conditions.IConditionBuilder` + `RecipeOutput#withConditions()` | docs.neoforged.net § Data Load Conditions | Confirmed | |
+| LAM-50 | `net.minecraftforge.common.Tags` | Forge 公共标签常量 | `net.neoforged.neoforge.common.Tags` | docs.neoforged.net § Tags | Confirmed | 标签常量路径不变 |
+| LAM-51 | `net.minecraft.data.recipes.FinishedRecipe` | 已完成的食谱表示 | **已移除** — 由 `RecipeOutput` 内部处理 | docs.neoforged.net § Recipes | Confirmed | |
 
 ## Open
 
 | ID | 待确认旧 API / 模式 | 文件位置 | 需要确认的问题 | 下一次查询建议 |
 |---|---|---|---|---|
+
+## Confirmed (Phase 6)
+
+| ID | 旧 Forge API / 模式 | 使用意图 | NeoForge 1.21.1 替换方案 | 证据 | 状态 | 备注 |
+|---|---|---|---|---|---|---|
+| LAM-52 | `Item#initializeClient(Consumer<IClientItemExtensions>)` | 注册 BEWLR 自定义渲染器 | `RegisterClientExtensionsEvent` + `event.registerItem(new IClientItemExtensions() {...}, items)` | docs.neoforged.net § BER | Confirmed | BEWLR 实例化转移到 IClientItemExtensions 实现中 |
+| LAM-53 | `InputEvent.Key` + `KeyMapping#isDown()` | 检测按键按下 | `ClientTickEvent.Post` + `while (KeyMapping#consumeClick())` | docs.neoforged.net § KeyMappings | Confirmed | NeoForge 强烈建议不使用 InputEvent |
+| LAM-54 | `Item#getShareTag(ItemStack)` / `Item#readShareTag(ItemStack, CompoundTag)` | 物品 NBT 数据同步 | **已移除** — 使用 DataComponentType 的 `networkSynchronized` StreamCodec | docs.neoforged.net § DataComponents | Confirmed | Item 类中不再存在这些方法 |
+| LAM-55 | `BlockEntityWithoutLevelRenderer(BlockEntityRenderDispatcher)` (单参构造) | BEWLR 构造 | `BlockEntityWithoutLevelRenderer(BlockEntityRenderDispatcher, EntityModelSet)` (双参构造) | 1.21.1 SDK 源码 | Confirmed | EntityModelSet 参数为新增必需参数 |
+| LAM-56 | `@EventBusSubscriber` 无 modid 参数 | 自动注册事件监听器 | `@EventBusSubscriber(modid = "modid")` — modid 参数必须提供 | docs.neoforged.net § Events | Confirmed | 已在 Phase 2 应用 |
+| LAM-57 | N/A (新增) | 注册 IClientItemExtensions | `RegisterClientExtensionsEvent` 在 MOD 事件总线上触发 | docs.neoforged.net § BER | Confirmed | 替代 Item#initializeClient |
+
+## Confirmed (Phase 7)
+
+| ID | 旧 Forge API / 模式 | 使用意图 | NeoForge 1.21.1 替换方案 | 证据 | 状态 | 备注 |
+|---|---|---|---|---|---|---|
+| LAM-58 | `new ResourceLocation(String, String)` | 创建资源位置 | `ResourceLocation.fromNamespaceAndPath(String, String)` | 1.21.1 SDK 源码 | Confirmed | 构造函数在 1.21.1 变为 private |
+| LAM-59 | `net.minecraft.data.worldgen.BootstapContext` (typo) | 数据生成引导上下文 | `net.minecraft.data.worldgen.BootstrapContext` | 1.21.1 SDK 源码 | Confirmed | 原始 Forge 代码中的拼写错误 |
+| LAM-60 | `Supplier<Item>.getId()` | 获取注册项 ResourceLocation | `BuiltInRegistries.ITEM.getKey(supplier.get())` | 1.21.1 SDK 源码 | Confirmed | Supplier 不提供 getId() 方法；改用注册表查询 |

@@ -4,6 +4,8 @@ import cn.mmf.energyblade.energy.FEBladeStorage;
 import cn.mmf.energyblade.item.ItemFEBlade;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import io.netty.buffer.ByteBuf;
 import mods.flammpfeil.slashblade.item.ItemTierSlashBlade;
 import net.minecraft.core.component.DataComponentType;
@@ -11,7 +13,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -49,16 +50,27 @@ public class Energyblade {
                 Codec.BOOL.fieldOf("isPowered").forGetter(EnergyBladeData::isPowered)
         ).apply(instance, EnergyBladeData::new));
 
-        public static final StreamCodec<ByteBuf, EnergyBladeData> STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.INT, EnergyBladeData::energy,
-                ByteBufCodecs.INT, EnergyBladeData::capacity,
-                ByteBufCodecs.INT, EnergyBladeData::maxReceive,
-                ByteBufCodecs.INT, EnergyBladeData::maxExtract,
-                ByteBufCodecs.INT, EnergyBladeData::powerupExtract,
-                ByteBufCodecs.INT, EnergyBladeData::standbyExtract,
-                ByteBufCodecs.BOOL, EnergyBladeData::energyDurability,
-                ByteBufCodecs.BOOL, EnergyBladeData::isPowered,
-                EnergyBladeData::new
+        public static final StreamCodec<ByteBuf, EnergyBladeData> STREAM_CODEC = StreamCodec.of(
+                (buf, data) -> {
+                    ByteBufCodecs.INT.encode(buf, data.energy);
+                    ByteBufCodecs.INT.encode(buf, data.capacity);
+                    ByteBufCodecs.INT.encode(buf, data.maxReceive);
+                    ByteBufCodecs.INT.encode(buf, data.maxExtract);
+                    ByteBufCodecs.INT.encode(buf, data.powerupExtract);
+                    ByteBufCodecs.INT.encode(buf, data.standbyExtract);
+                    ByteBufCodecs.BOOL.encode(buf, data.energyDurability);
+                    ByteBufCodecs.BOOL.encode(buf, data.isPowered);
+                },
+                buf -> new EnergyBladeData(
+                        ByteBufCodecs.INT.decode(buf),
+                        ByteBufCodecs.INT.decode(buf),
+                        ByteBufCodecs.INT.decode(buf),
+                        ByteBufCodecs.INT.decode(buf),
+                        ByteBufCodecs.INT.decode(buf),
+                        ByteBufCodecs.INT.decode(buf),
+                        ByteBufCodecs.BOOL.decode(buf),
+                        ByteBufCodecs.BOOL.decode(buf)
+                )
         );
     }
 

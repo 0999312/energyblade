@@ -5,16 +5,18 @@
   "key": {
     "B": {
       "type": "slashblade:blade",
-      "item": "slashblade:slashblade",
+      "items": [
+        "slashblade:slashblade"
+      ],
       "request": {
         "refine": 10
       }
     },
     "J": {
-      "tag": "forge:storage_blocks/redstone"
+      "tag": "c:storage_blocks/redstone"
     },
     "L": {
-      "tag": "forge:storage_blocks/iron"
+      "tag": "c:storage_blocks/iron"
     },
     "S": {
       "item": "slashblade:proudsoul_sphere"
@@ -26,7 +28,7 @@
     "JLS"
   ],
   "result": {
-    "item": "slashblade:slashblade"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "slashblade:slashblade"
+  }
 }

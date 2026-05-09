@@ -2,10 +2,10 @@ package cn.mmf.energyblade.data;
 
 import java.util.concurrent.CompletableFuture;
 
-import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.recipe.RequestDefinition;
 import mods.flammpfeil.slashblade.recipe.SlashBladeIngredient;
 import mods.flammpfeil.slashblade.recipe.SlashBladeShapedRecipeBuilder;
+import mods.flammpfeil.slashblade.registry.SlashBladeItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -29,10 +29,10 @@ public class SlashBladeRecipeProvider extends RecipeProvider implements IConditi
         .define('B',
                 SlashBladeIngredient
                         .of(RequestDefinition.Builder.newInstance().refineCount(10).build()))
-        .define('S', Ingredient.of(SBItems.proudsoul_sphere))
+        .define('S', Ingredient.of(SlashBladeItems.PROUDSOUL_SPHERE.get()))
         .define('J', Ingredient.of(Tags.Items.STORAGE_BLOCKS_REDSTONE))
         .define('L', Ingredient.of(Tags.Items.STORAGE_BLOCKS_IRON))
-        .unlockedBy(getHasName(SBItems.slashblade), has(SBItems.slashblade)).save(output);
+        .unlockedBy(getHasName(SlashBladeItems.SLASHBLADE.get()), has(SlashBladeItems.SLASHBLADE.get())).save(output);
 
     }
 

@@ -14,7 +14,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 
-@EventBusSubscriber(modid = Energyblade.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Energyblade.MODID)
 public class DataGen {
 	@SubscribeEvent
 	public static void dataGen(GatherDataEvent event) {

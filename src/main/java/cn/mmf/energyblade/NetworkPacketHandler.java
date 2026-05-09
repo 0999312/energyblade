@@ -8,7 +8,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
-@EventBusSubscriber(modid = Energyblade.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Energyblade.MODID)
 public class NetworkPacketHandler {
 
     @SubscribeEvent

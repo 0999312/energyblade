@@ -26,7 +26,7 @@ neoForge {
         }
         server {
             server()
-            programArgument '--nogui'
+            // programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
         gameTestServer {
@@ -79,17 +79,17 @@ dependencies {
     // SlashBlade: Resharped (NeoForge 1.21.1 port)
     // NOTE: Temporarily commented — TLS-restricted environment cannot reach MMMaven/ModMaven.
     //       Uncomment when network access is available.
-    // implementation "mods.flammpfeil.slashblade:SlashBlade_Resharped:2.0.2-1.21.1"
+    implementation "mods.flammpfeil.slashblade:SlashBlade_Resharped:2.0.2-1.21.1"
 
     // JEI (compile-only API, runtime full jar via localRuntime)
     // NOTE: Temporarily commented — TLS-restricted environment.
-    // compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    // compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    // localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    //compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
     // Mekanism (runtime-only for FE charging dev testing)
     // NOTE: Temporarily commented — TLS-restricted environment.
-    // implementation "mekanism:Mekanism:${minecraft_version}-${mekanism_version}"
+    implementation "mekanism:Mekanism:${minecraft_version}-${mekanism_version}"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

@@ -2,7 +2,7 @@ package cn.mmf.energyblade;
 
 import cn.mmf.energyblade.energy.FEBladeStorage;
 import io.netty.buffer.ByteBuf;
-import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.capability.slashblade.SlashBladeDataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -39,7 +39,7 @@ public record PowerSwitchPacket(String message) implements CustomPacketPayload {
             return;
 
         ItemStack mainHandItem = player.getMainHandItem();
-        if (mainHandItem.getCapability(ItemSlashBlade.BLADESTATE) == null)
+        if (mainHandItem.get(SlashBladeDataComponents.BLADE_STATE_DATA) == null)
             return;
 
         var energy = mainHandItem.getCapability(Capabilities.EnergyStorage.ITEM);
@@ -61,7 +61,7 @@ public record PowerSwitchPacket(String message) implements CustomPacketPayload {
                         serverLevel.sendParticles(ParticleTypes.PORTAL, x, y, z, 0, xDist, yDist + 0.2D, zDist, 1);
                     }
                 }
-                player.playNotifySound(SoundEvents.TRIDENT_THUNDER, SoundSource.PLAYERS, 2.5F, 1F);
+                player.playNotifySound(SoundEvents.TRIDENT_THUNDER.value(), SoundSource.PLAYERS, 2.5F, 1F);
             } else {
                 bladeFE.setPowered(false);
                 player.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1F, 1F);

@@ -5,15 +5,15 @@
 See: `.planning/PROJECT.md` (updated 2026-05-08)
 
 **Core value:** The mod must compile, load, and function identically on NeoForge 1.21.1
-**Current focus:** Phase 5 — Datagen And Resources
+**Current focus:** Milestone complete — awaiting SlashBlade/JEI deps for runClient validation
 
 ## Current Phase
 
-- **Phase:** 5
-- **Name:** Datagen And Resources
-- **Status:** Completed
-- **Goal:** Migrate recipe and registry datagen to NeoForge data generation API
-- **Plans:** 1 (05-PLAN.md)
+- **Phase:** 7 (Complete)
+- **Name:** Cleanup And Validation
+- **Status:** Complete (runClient blocked on SlashBlade/JEI deps)
+- **Goal:** Remove all Forge references, verify end-to-end functionality
+- **Plans:** 1 (07-PLAN.md)
 
 ## Requirements Coverage
 
@@ -24,9 +24,9 @@ See: `.planning/PROJECT.md` (updated 2026-05-08)
 | 3 | DAT-01..DAT-05 (5) | Pending |
 | 4 | NET-01..NET-04 (4) | Pending |
 | 5 | GEN-01..GEN-05 (5) | Complete (5/5) |
-| 6 | CLI-01..CLI-07 (7) | Pending |
-| 7 | CLN-01..CLN-05 (5) | Pending |
-| **Total** | **35** | 5 complete |
+| 6 | CLI-01..CLI-07 (7) | Executed (6/7); blocked on SlashBlade/JEI deps |
+| 7 | CLN-01..CLN-05 (5) | Complete (4/5); CLN-04 blocked on SlashBlade/JEI deps |
+| **Total** | **35** | 29 complete, 6 executed (blocked) |
 
 ## Artifacts
 
