@@ -25,17 +25,17 @@ The mod must compile, load, and function identically on NeoForge 1.21.1 — the 
 
 ### Active
 
-- [ ] **MIG-01**: Build system upgraded to NeoForge 1.21.1 Gradle plugins and dependencies
-- [ ] **MIG-02**: Mod entry point and registration migrated to NeoForge APIs
-- [ ] **MIG-03**: Event bus and lifecycle events migrated to NeoForge equivalents
-- [ ] **MIG-04**: Capability system (IEnergyStorage, capability provider) migrated to NeoForge data components / attachments
-- [ ] **MIG-05**: Network system (SimpleChannel, packet registration) migrated to NeoForge payload system
-- [ ] **MIG-06**: Datagen (GatherDataEvent, recipe/provider) migrated to NeoForge datagen APIs
-- [ ] **MIG-07**: Client systems (renderer, input, keymapping, model baking) migrated to NeoForge client APIs
-- [ ] **MIG-08**: All Forge imports and annotations cleaned up — zero Forge references remain
-- [ ] **MIG-09**: Compilation succeeds with `./gradlew compileJava`
-- [ ] **MIG-10**: Datagen runs successfully with `./gradlew runData`
-- [ ] **MIG-11**: Client loads and blade renders/behaves correctly with `./gradlew runClient`
+- [x] **MIG-01**: Build system upgraded to NeoForge 1.21.1 Gradle plugins and dependencies
+- [x] **MIG-02**: Mod entry point and registration migrated to NeoForge APIs
+- [x] **MIG-03**: Event bus and lifecycle events migrated to NeoForge equivalents
+- [x] **MIG-04**: Capability system (IEnergyStorage, capability provider) migrated to NeoForge data components / attachments
+- [x] **MIG-05**: Network system (SimpleChannel, packet registration) migrated to NeoForge payload system
+- [x] **MIG-06**: Datagen (GatherDataEvent, recipe/provider) migrated to NeoForge datagen APIs
+- [x] **MIG-07**: Client systems (renderer, input, keymapping, model baking) migrated to NeoForge client APIs
+- [x] **MIG-08**: All Forge imports and annotations cleaned up — zero Forge references remain
+- [x] **MIG-09**: Compilation succeeds with `./gradlew compileJava`
+- [x] **MIG-10**: Datagen runs successfully with `./gradlew runData`
+- [x] **MIG-11**: Client loads and blade renders/behaves correctly with `./gradlew runClient`
 
 ### Out of Scope
 

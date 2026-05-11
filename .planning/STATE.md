@@ -2,16 +2,16 @@
 
 ## Project Reference
 
-See: `.planning/PROJECT.md` (updated 2026-05-08)
+See: `.planning/PROJECT.md` (updated 2026-05-11)
 
 **Core value:** The mod must compile, load, and function identically on NeoForge 1.21.1
-**Current focus:** Milestone complete — awaiting SlashBlade/JEI deps for runClient validation
+**Current focus:** **MILESTONE COMPLETE** — All 7 phases completed, runClient verified
 
 ## Current Phase
 
-- **Phase:** 7 (Complete)
+- **Phase:** 7 (Complete ✓)
 - **Name:** Cleanup And Validation
-- **Status:** Complete (runClient blocked on SlashBlade/JEI deps)
+- **Status:** Complete — All requirements met, runClient passes
 - **Goal:** Remove all Forge references, verify end-to-end functionality
 - **Plans:** 1 (07-PLAN.md)
 
@@ -19,14 +19,14 @@ See: `.planning/PROJECT.md` (updated 2026-05-08)
 
 | Phase | Requirements | Status |
 |-------|-------------|--------|
-| 1 | BLD-01..BLD-06 (6) | Pending |
-| 2 | REG-01..REG-04 (4) | Pending |
-| 3 | DAT-01..DAT-05 (5) | Pending |
-| 4 | NET-01..NET-04 (4) | Pending |
+| 1 | BLD-01..BLD-06 (6) | Complete (6/6) |
+| 2 | REG-01..REG-04 (4) | Complete (4/4) |
+| 3 | DAT-01..DAT-05 (5) | Complete (5/5) |
+| 4 | NET-01..NET-04 (4) | Complete (4/4) |
 | 5 | GEN-01..GEN-05 (5) | Complete (5/5) |
-| 6 | CLI-01..CLI-07 (7) | Executed (6/7); blocked on SlashBlade/JEI deps |
-| 7 | CLN-01..CLN-05 (5) | Complete (4/5); CLN-04 blocked on SlashBlade/JEI deps |
-| **Total** | **35** | 29 complete, 6 executed (blocked) |
+| 6 | CLI-01..CLI-07 (7) | Complete (7/7) |
+| 7 | CLN-01..CLN-05 (5) | Complete (5/5) |
+| **Total** | **35** | **35/35 Complete** |
 
 ## Artifacts
 
@@ -39,10 +39,17 @@ See: `.planning/PROJECT.md` (updated 2026-05-08)
 | Roadmap | `.planning/ROADMAP.md` |
 | State | `.planning/STATE.md` |
 
-## Known Blockers
+## Milestone Summary
 
-- **SlashBlade: Resharped NeoForge availability** — Required for Phase 3+. If not ported, migration stalls at Phase 3.
+All 7 phases of the HF Blade 1.20.1 Forge → 1.21.1 NeoForge migration are complete.
+
+**Verification:**
+- `./gradlew compileJava` — passes (zero errors)
+- `./gradlew runData` — generates correctly
+- `./gradlew runClient` — loads mod, blade functions correctly
+
+**Requirement coverage:** 35/35 (100%)
 
 ## Last Updated
 
-2026-05-08 after Phase 5 execution
+2026-05-11 after milestone completion
