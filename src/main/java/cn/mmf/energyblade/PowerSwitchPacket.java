@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -38,7 +39,7 @@ public class PowerSwitchPacket {
 			ItemStack mainHandItem = player.getMainHandItem();
 			if (!mainHandItem.getCapability(ItemSlashBlade.BLADESTATE).isPresent())
 				return;
-
+			var bladeState = mainHandItem.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
 			mainHandItem.getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> {
 				if (energy instanceof FEBladeStorage bladeFE) {
 					if (!bladeFE.isPowered() && bladeFE.extractEnergy(bladeFE.getPowerupExtract(), true) == bladeFE.getPowerupExtract()) {
@@ -63,6 +64,8 @@ public class PowerSwitchPacket {
 						bladeFE.setPowered(false);
 						player.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1F, 1F);
 					}
+					
+					MinecraftForge.EVENT_BUS.post(new EmpowerSlashBladeEvent(mainHandItem, bladeState, bladeFE, bladeFE.isPowered()));
 				}
 			});
 		});

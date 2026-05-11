@@ -58,9 +58,6 @@ public class FEBladeStorage implements IEnergyStorage, INBTSerializable<Compound
 		int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
 		if (!simulate) {
 			energy -= energyExtracted;
-			if(energy <= 0) {
-				this.setPowered(false);
-			}
 		}
 		return energyExtracted;
 	}

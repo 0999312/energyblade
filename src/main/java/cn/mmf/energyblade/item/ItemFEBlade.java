@@ -2,6 +2,7 @@ package cn.mmf.energyblade.item;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
+import cn.mmf.energyblade.EmpowerSlashBladeEvent;
 import cn.mmf.energyblade.client.render.EnergyBladeBEWLR;
 import cn.mmf.energyblade.energy.FEBladeStorage;
 import cn.mmf.energyblade.energy.FECapabilityProvider;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -158,7 +160,6 @@ public class ItemFEBlade extends ItemSlashBlade {
 
 	@Override
 	public <T extends LivingEntity> int damageItem(ItemStack arg0, int arg1, T arg2, Consumer<T> arg3) {
-		// TODO 电量耐久适配消耗
 		return super.damageItem(arg0, arg1, arg2, arg3);
 	}
 
@@ -180,6 +181,7 @@ public class ItemFEBlade extends ItemSlashBlade {
 		if (!(event.getEntity() instanceof LivingEntity)) {
 			return;
 		}
+
 		LivingEntity living = (LivingEntity) event.getEntity();
 		if (!event.isSelected()) {
 			return;
@@ -188,12 +190,13 @@ public class ItemFEBlade extends ItemSlashBlade {
 		event.getBlade().getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> {
 			if (energy instanceof FEBladeStorage bladeFE) {
 				if (bladeFE.isPowered()) {
-					if (bladeFE.extractEnergy(bladeFE.getStandbyExtract(), true) == bladeFE.getStandbyExtract()) {
+					if (bladeFE.getEnergyStored() >= bladeFE.getStandbyExtract()) {
 						bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
 						living.getCapability(CapabilityConcentrationRank.RANK_POINT)
 	                    .ifPresent(cap->cap.addRankPoint(living, cap.getMaxCapacity()));
 					} else {
 						bladeFE.setPowered(false);
+						MinecraftForge.EVENT_BUS.post(new EmpowerSlashBladeEvent(event.getBlade(), event.getSlashBladeState(), bladeFE, false));
 						event.getEntity().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);
 					}
 				}
@@ -210,6 +213,7 @@ public class ItemFEBlade extends ItemSlashBlade {
 						bladeFE.extractEnergy(bladeFE.getStandbyExtract(), false);
 					} else {
 						bladeFE.setPowered(false);
+						MinecraftForge.EVENT_BUS.post(new EmpowerSlashBladeEvent(event.getBlade(), event.getSlashBladeState(), bladeFE, false));
 						event.getUser().playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1F, 1F);
 					}
 				}
